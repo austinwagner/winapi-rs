@@ -30,7 +30,12 @@ extern "system" {
         TokenHandle: HANDLE, DisableAllPrivileges: BOOL, NewState: PTOKEN_PRIVILEGES,
         BufferLength: DWORD, PreviousState: PTOKEN_PRIVILEGES, ReturnLength: PDWORD,
     ) -> BOOL;
-    // pub fn AllocateAndInitializeSid();
+    pub fn AllocateAndInitializeSid(
+        pIdentifierAuthoirity: PSID_IDENTIFIER_AUTHORITY, nSubAuthorityCount: BYTE,
+        dwSubAuthority0: DWORD, dwSubAuthority1: DWORD, dwSubAuthority2: DWORD,
+        dwSubAuthority3: DWORD, dwSubAuthority4: DWORD, dwSubAuthority5: DWORD,
+        dwSubAuthority6: DWORD, dwSubAuthority7: DWORD, pSid: *mut PSID,
+    ) -> BOOL;
     pub fn AllocateLocallyUniqueId(Luid: PLUID) -> BOOL;
     pub fn AreAllAccessesGranted(GrantedAccess: DWORD, DesiredAccess: DWORD) -> BOOL;
     pub fn AreAnyAccessesGranted(GrantedAccess: DWORD, DesiredAccess: DWORD) -> BOOL;
@@ -69,22 +74,38 @@ extern "system" {
     // pub fn BaseRegSetKeySecurity();
     // pub fn BaseRegSetValue();
     // pub fn BaseRegUnLoadKey();
-    // pub fn BuildExplicitAccessWithNameA();
-    // pub fn BuildExplicitAccessWithNameW();
+    pub fn BuildExplicitAccessWithNameA(
+        pExplicitAccess: PEXPLICIT_ACCESS_A, pTrusteeName: LPSTR, AccessPermissions: DWORD,
+        AccessMode: ACCESS_MODE, Inheritance: DWORD,
+    );
+    pub fn BuildExplicitAccessWithNameW(
+        pExplicitAccess: PEXPLICIT_ACCESS_W, pTrusteeName: LPWSTR, AccessPermissions: DWORD,
+        AccessMode: ACCESS_MODE, Inheritance: DWORD,
+    );
     // pub fn BuildImpersonateExplicitAccessWithNameA();
     // pub fn BuildImpersonateExplicitAccessWithNameW();
     // pub fn BuildImpersonateTrusteeA();
     // pub fn BuildImpersonateTrusteeW();
-    // pub fn BuildSecurityDescriptorA();
-    // pub fn BuildSecurityDescriptorW();
-    // pub fn BuildTrusteeWithNameA();
-    // pub fn BuildTrusteeWithNameW();
+    pub fn BuildSecurityDescriptorA(
+        pOwner: PTRUSTEE_A, pGroup: PTRUSTEE_A, cCountOfAccessEntries: ULONG,
+        pListOfAccessEntries: PEXPLICIT_ACCESS_A, cCountOfAuditEntries: ULONG,
+        pListOfAuditEntries: PEXPLICIT_ACCESS_A, pOldSD: PSECURITY_DESCRIPTOR,
+        pSizeNewSD: PULONG, pNewSD: *mut PSECURITY_DESCRIPTOR,
+    ) -> DWORD;
+    pub fn BuildSecurityDescriptorW(
+        pOwner: PTRUSTEE_W, pGroup: PTRUSTEE_W, cCountOfAccessEntries: ULONG,
+        pListOfAccessEntries: PEXPLICIT_ACESS_W, cCountOfAuditEntries: ULONG,
+        pListOfAuditEntries: PEXPLICIT_ACCESS_W, pOldSD: PSECURITY_DESCRIPTOR,
+        pSizeNewSD: PULONG, pNewSD: *mut PSECURITY_DESCRIPTOR,
+    ) -> DWORD
+    pub fn BuildTrusteeWithNameA(pTrustee: PTRUSTEE_A, pName: LPSTR);
+    pub fn BuildTrusteeWithNameW(pTrustee: PTRUSTEE_W, pName: LPWSTR);
     // pub fn BuildTrusteeWithObjectsAndNameA();
     // pub fn BuildTrusteeWithObjectsAndNameW();
     // pub fn BuildTrusteeWithObjectsAndSidA();
     // pub fn BuildTrusteeWithObjectsAndSidW();
-    // pub fn BuildTrusteeWithSidA();
-    // pub fn BuildTrusteeWithSidW();
+    pub fn BuildTrusteeWithSidA(pTrustee: PTRUSTEE_A, pSid: PSID);
+    pub fn BuildTrusteeWithSidW(pTrustee: PTRUSTEE_W, pSid: PSID);
     // pub fn CancelOverlappedAccess();
     // pub fn ChangeServiceConfig2A();
     // pub fn ChangeServiceConfig2W();
@@ -113,20 +134,34 @@ extern "system" {
     // pub fn ConvertSecurityDescriptorToAccessNamedA();
     // pub fn ConvertSecurityDescriptorToAccessNamedW();
     // pub fn ConvertSecurityDescriptorToAccessW();
-    // pub fn ConvertSecurityDescriptorToStringSecurityDescriptorA();
-    // pub fn ConvertSecurityDescriptorToStringSecurityDescriptorW();
-    // pub fn ConvertSidToStringSidA();
-    // pub fn ConvertSidToStringSidW();
+    pub fn ConvertSecurityDescriptorToStringSecurityDescriptorA(
+        SecurityDescriptor: PSECURITY_DESCRIPTOR, RequestedStringSDRevision: DWORD,
+        SecurityInformation: SECURITY_INFORMATION, StringSecurityDescriptor: *mut LPSTR,
+        StringSecurityDescriptorLen: PULONG,
+    ) -> BOOL;
+    pub fn ConvertSecurityDescriptorToStringSecurityDescriptorW(
+        SecurityDescriptor: PSECURITY_DESCRIPTOR, RequestedStringSDRevision: DWORD,
+        SecurityInformation: SECURITY_INFORMATION, StringSecurityDescriptor: *mut LPWSTR,
+        StringSecurityDescriptorLen: PULONG,
+    ) -> BOOL;
+    pub fn ConvertSidToStringSidA(Sid: PSID, StringSid: *mut LPSTR) -> BOOL;
+    pub fn ConvertSidToStringSidW(Sid: PSID, StringSid: *mut LPWSTR) -> BOOL;
     // pub fn ConvertStringSDToSDDomainA();
     // pub fn ConvertStringSDToSDDomainW();
     // pub fn ConvertStringSDToSDRootDomainA();
     // pub fn ConvertStringSDToSDRootDomainW();
-    // pub fn ConvertStringSecurityDescriptorToSecurityDescriptorA();
-    // pub fn ConvertStringSecurityDescriptorToSecurityDescriptorW();
-    // pub fn ConvertStringSidToSidA();
-    // pub fn ConvertStringSidToSidW();
+    pub fn ConvertStringSecurityDescriptorToSecurityDescriptorA(
+        StringSecurityDescriptor: LPCSTR, StringSDRevision: DWORD,
+        SecurityDescriptor: *mut PSECURITY_DESCRIPTOR, SecurityDescriptorSize: PULONG,
+    ) -> BOOL;
+    pub fn ConvertStringSecurityDescriptorToSecurityDescriptorW(
+        StringSecurityDescriptor: LPCWSTR, StringSDRevision: DWORD,
+        SecurityDescriptor: *mut PSECURITY_DESCRIPTOR, SecurityDescriptorSize: PULONG,
+    ) -> BOOL;
+    pub fn ConvertStringSidToSidA(StringSid: LPCSTR, Sid: *mut PSID) -> BOOL;
+    pub fn ConvertStringSidToSidW(StringSid: LPCWSTR, Sid: *mut PSID) -> BOOL;
     // pub fn ConvertToAutoInheritPrivateObjectSecurity();
-    // pub fn CopySid();
+    pub fn CopySid(nDestinationSidLength: DWORD, pDestinationSid: PSID, pSourceSid: PSID) -> BOOL;
     // pub fn CreateCodeAuthzLevel();
     // pub fn CreatePrivateObjectSecurity();
     // pub fn CreatePrivateObjectSecurityEx();
@@ -147,7 +182,9 @@ extern "system" {
         lpDependencies: LPCWSTR, lpServiceStartName: LPCWSTR, lpPassword: LPCWSTR,
     ) -> SC_HANDLE;
     // pub fn CreateTraceInstanceId();
-    // pub fn CreateWellKnownSid();
+    pub fn CreateWellKnownSid(
+        WellKnownSidType: WELL_KNOWN_SID_TYPE, DomainSid: PSID, pSid: PSID, cbSid: PDWORD,
+    ) -> BOOL;
     pub fn CredDeleteA(TargetName: LPCSTR, Type: DWORD, Flags: DWORD) -> BOOL;
     pub fn CredDeleteW(TargetName: LPCWSTR, Type: DWORD, Flags: DWORD) -> BOOL;
     // pub fn CredEnumerateA();
@@ -302,12 +339,19 @@ extern "system" {
         hHash: HCRYPTHASH, pbSignature: *const BYTE, dwSigLen: DWORD, hPubKey: HCRYPTKEY,
         szDescription: LPCWSTR, dwFlags: DWORD,
     ) -> BOOL;
-    // pub fn DeleteAce();
+    pub fn DeleteAce(pAcl: PACL, dwAceIndex: DWORD) -> BOOL;
     pub fn DeleteService(hService: SC_HANDLE) -> BOOL;
     // pub fn DestroyPrivateObjectSecurity();
     // pub fn DuplicateEncryptionInfoFile();
-    // pub fn DuplicateToken();
-    // pub fn DuplicateTokenEx();
+    pub fn DuplicateToken(
+        ExistingTokenHandle: HANDLE, ImpersonationLevel: SECURITY_IMPERSONATION_LEVEL,
+        DuplicateTokenHandle: PHANDLE,
+    ) -> BOOL;
+    pub fn DuplicateTokenEx(
+        hExistingToken: HANDLE, dwDesiredAccess: DWORD, lpTokenAttributes: LPSECURITY_ATTRIBUTES,
+        ImpersonationLevel: SECURITY_IMPERSONATION_LEVEL, TokenType: TOKEN_TYPE,
+        phNewToken: PHANDLE,
+    ) -> BOOL;
     // pub fn ElfBackupEventLogFileA();
     // pub fn ElfBackupEventLogFileW();
     // pub fn ElfChangeNotify();
@@ -344,9 +388,9 @@ extern "system" {
     // pub fn EnumServicesStatusW();
     // pub fn EnumerateTraceGuids();
     // pub fn EnumerateTraceGuidsEx();
-    // pub fn EqualDomainSid();
-    // pub fn EqualPrefixSid();
-    // pub fn EqualSid();
+    pub fn EqualDomainSid(pSid1: PSID, pSid2: PSID, pfEqual: *mut BOOL) -> BOOL;
+    pub fn EqualPrefixSid(pSid1: PSID, pSid2: PSID) -> BOOL;
+    pub fn EqualSid(pSid1: PSID, pSid2: PSID) -> BOOL;
     // pub fn EtwLogSysConfigExtension();
     // pub fn EventAccessControl();
     // pub fn EventAccessQuery();
@@ -363,7 +407,7 @@ extern "system" {
     // pub fn EventWriteStartScenario();
     // pub fn EventWriteString();
     // pub fn EventWriteTransfer();
-    // pub fn FindFirstFreeAce();
+    pub fn FindFirstFreeAce(pAcl: PACL, pAce: *mut LPVOID) -> BOOL;
     // pub fn FlushEfsCache();
     // pub fn FlushTraceA();
     // pub fn FlushTraceW();
@@ -371,11 +415,14 @@ extern "system" {
     // pub fn FreeEncryptedFileMetadata();
     // pub fn FreeEncryptionCertificateHashList();
     // pub fn FreeInheritedFromArray();
-    // pub fn FreeSid();
+    pub fn FreeSid(pSid: PSID) -> PVOID;
     // pub fn GetAccessPermissionsForObjectA();
     // pub fn GetAccessPermissionsForObjectW();
-    // pub fn GetAce();
-    // pub fn GetAclInformation();
+    pub fn GetAce(pAcl: PACL, dwAceIndex: DWORD, pAce: *mut LPVOID) -> BOOL;
+    pub fn GetAclInformation(
+        pAcl: PACL, pAclInformtion: LPVOID, nAclInformationLength: DWORD,
+        dwAclInformationClass: ACL_INFORMATION_CLASS,
+    ) -> BOOL;
     // pub fn GetAuditedPermissionsFromAclA();
     // pub fn GetAuditedPermissionsFromAclW();
     // pub fn GetDynamicTimeZoneInformationEffectiveYears();
@@ -443,16 +490,20 @@ extern "system" {
     // pub fn ImpersonateLoggedOnUser();
     // pub fn ImpersonateNamedPipeClient();
     // pub fn ImpersonateSelf();
-    // pub fn InitializeAcl();
-    // pub fn InitializeSecurityDescriptor();
-    // pub fn InitializeSid();
+    pub fn InitializeAcl(pAcl: PACL, nAclLength: DWORD, dwAclRevision: DWORD) -> BOOL;
+    pub fn InitializeSecurityDescriptor(
+        pSecurityDescriptor: PSECURITY_DESCRIPTOR, dwRevision: DWORD,
+    ) -> BOOL;
+    pub fn InitializeSid(
+        Sid: PSID, pIdentifierAuthority: PSID_IDENTIFIER_AUTHORITY, nSubAuthorityCount: BYTE,
+    ) -> BOOL;
     // pub fn InstallApplication();
     // pub fn IsTokenRestricted();
-    // pub fn IsValidAcl();
+    pub fn IsValidAcl(pAcl: PACL) -> BOOL;
     // pub fn IsValidRelativeSecurityDescriptor();
-    // pub fn IsValidSecurityDescriptor();
-    // pub fn IsValidSid();
-    // pub fn IsWellKnownSid();
+    pub fn IsValidSecurityDescriptor(pSecurityDescriptor: PSECURITY_DESCRIPTOR) -> BOOL;
+    pub fn IsValidSid(pSid: PSID) -> BOOL;
+    pub fn IsWellKnownSid(pSid: PSID, WellKnownSidType: WELL_KNOWN_SID_TYPE) -> BOOL;
     // pub fn LockServiceDatabase();
     // pub fn LookupSecurityDescriptorPartsA();
     // pub fn LookupSecurityDescriptorPartsW();
@@ -645,8 +696,14 @@ extern "system" {
     // pub fn SetEncryptedFileMetadata();
     // pub fn SetEntriesInAccessListA();
     // pub fn SetEntriesInAccessListW();
-    // pub fn SetEntriesInAclA();
-    // pub fn SetEntriesInAclW();
+    pub fn SetEntriesInAclA(
+        cCountOfExplicitEntries: ULONG, pListOfExplicitEntries: PEXPLICIT_ACCESS_A,
+        OldAcl: PACL, NewAcl: *mut PACL,
+    ) -> DWORD;
+    pub fn SetEntriesInAclW(
+        cCountOfExplicitEntries: ULONG, pListOfExplicitEntries: PEXPLICIT_ACCESS_W,
+        OldAcl: PACL, NewAcl: *mut PACL,
+    ) -> DWORD;
     // pub fn SetEntriesInAuditListA();
     // pub fn SetEntriesInAuditListW();
     // pub fn SetFileSecurityW();
@@ -660,12 +717,28 @@ extern "system" {
     // pub fn SetPrivateObjectSecurity();
     // pub fn SetPrivateObjectSecurityEx();
     // pub fn SetSecurityAccessMask();
-    // pub fn SetSecurityDescriptorControl();
-    // pub fn SetSecurityDescriptorDacl();
-    // pub fn SetSecurityDescriptorGroup();
-    // pub fn SetSecurityDescriptorOwner();
-    // pub fn SetSecurityDescriptorRMControl();
-    // pub fn SetSecurityDescriptorSacl();
+     pub fn SetSecurityDescriptorControl(
+         pSecurityDescriptor: PSECURITY_DESCRIPTOR,
+         ControlBitsOfInterest: SECURITY_DESCRIPTOR_CONTROL,
+         ControlBitsToSet: SECURITY_DESCRIPTOR_CONTROL,
+     ) -> BOOL;
+     pub fn SetSecurityDescriptorDacl(
+         pSecurityDescriptor: PSECURITY_DESCRIPTOR, bDaclPresent: BOOL, pDacl: PACL,
+         bDaclDefaulted: BOOL,
+     ) -> BOOL;
+     pub fn SetSecurityDescriptorGroup(
+         pSecurityDescriptor: PSECURITY_DESCRIPTOR, pGroup: PSID, bGroupDefaulted: BOOL,
+     ) -> BOOL;
+     pub fn SetSecurityDescriptorOwner(
+         pSecurityDescriptor: PSECURITY_DESCRIPTOR, pOwner: PSID, bOwnerDefaulted: BOOL,
+     ) -> BOOL;
+     pub fn SetSecurityDescriptorRMControl(
+         pSecurityDescriptor: PSECURITY_DESCRIPTOR, RMControl: PUCHAR
+     ) -> DWORD;
+     pub fn SetSecurityDescriptorSacl(
+         pSecurityDescriptor: PSECURITY_DESCRIPTOR, bSaclPresent: BOOL, pSacl: PACL,
+         bSaclDefaulted: BOOL,
+     ) -> BOOL;
     // pub fn SetSecurityInfo();
     // pub fn SetSecurityInfoExA();
     // pub fn SetSecurityInfoExW();

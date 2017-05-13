@@ -2826,3 +2826,185 @@ pub const DLL_PROCESS_ATTACH: DWORD = 1;
 pub const DLL_THREAD_ATTACH: DWORD = 2;
 pub const DLL_THREAD_DETACH: DWORD = 3;
 pub const DLL_PROCESS_DETACH: DWORD = 0;
+STRUCT!{struct SID_IDENTIFIER_AUTHORITY {
+    Value: [BYTE; 6],
+}}
+pub type PSID_INDENTIFIER_AUTHORITY = *mut SID_INDENTIFIER_AUTHORITY;
+ENUM!{enum WELL_KNOWN_SID_TYPE {
+    WinNullSid                                   = 0,
+    WinWorldSid                                  = 1,
+    WinLocalSid                                  = 2,
+    WinCreatorOwnerSid                           = 3,
+    WinCreatorGroupSid                           = 4,
+    WinCreatorOwnerServerSid                     = 5,
+    WinCreatorGroupServerSid                     = 6,
+    WinNtAuthoritySid                            = 7,
+    WinDialupSid                                 = 8,
+    WinNetworkSid                                = 9,
+    WinBatchSid                                  = 10,
+    WinInteractiveSid                            = 11,
+    WinServiceSid                                = 12,
+    WinAnonymousSid                              = 13,
+    WinProxySid                                  = 14,
+    WinEnterpriseControllersSid                  = 15,
+    WinSelfSid                                   = 16,
+    WinAuthenticatedUserSid                      = 17,
+    WinRestrictedCodeSid                         = 18,
+    WinTerminalServerSid                         = 19,
+    WinRemoteLogonIdSid                          = 20,
+    WinLogonIdsSid                               = 21,
+    WinLocalSystemSid                            = 22,
+    WinLocalServiceSid                           = 23,
+    WinNetworkServiceSid                         = 24,
+    WinBuiltinDomainSid                          = 25,
+    WinBuiltinAdministratorsSid                  = 26,
+    WinBuiltinUsersSid                           = 27,
+    WinBuiltinGuestsSid                          = 28,
+    WinBuiltinPowerUsersSid                      = 29,
+    WinBuiltinAccountOperatorsSid                = 30,
+    WinBuiltinSystemOperatorsSid                 = 31,
+    WinBuiltinPrintOperatorsSid                  = 32,
+    WinBuiltinBackupOperatorsSid                 = 33,
+    WinBuiltinReplicatorSid                      = 34,
+    WinBuiltinPreWindows2000CompatibleAccessSid  = 35,
+    WinBuiltinRemoteDesktopUsersSid              = 36,
+    WinBuiltinNetworkConfigurationOperatorsSid   = 37,
+    WinAccountAdministratorSid                   = 38,
+    WinAccountGuestSid                           = 39,
+    WinAccountKrbtgtSid                          = 40,
+    WinAccountDomainAdminsSid                    = 41,
+    WinAccountDomainUsersSid                     = 42,
+    WinAccountDomainGuestsSid                    = 43,
+    WinAccountComputersSid                       = 44,
+    WinAccountControllersSid                     = 45,
+    WinAccountCertAdminsSid                      = 46,
+    WinAccountSchemaAdminsSid                    = 47,
+    WinAccountEnterpriseAdminsSid                = 48,
+    WinAccountPolicyAdminsSid                    = 49,
+    WinAccountRasAndIasServersSid                = 50,
+    WinNTLMAuthenticationSid                     = 51,
+    WinDigestAuthenticationSid                   = 52,
+    WinSChannelAuthenticationSid                 = 53,
+    WinThisOrganizationSid                       = 54,
+    WinOtherOrganizationSid                      = 55,
+    WinBuiltinIncomingForestTrustBuildersSid     = 56,
+    WinBuiltinPerfMonitoringUsersSid             = 57,
+    WinBuiltinPerfLoggingUsersSid                = 58,
+    WinBuiltinAuthorizationAccessSid             = 59,
+    WinBuiltinTerminalServerLicenseServersSid    = 60,
+    WinBuiltinDCOMUsersSid                       = 61,
+    WinBuiltinIUsersSid                          = 62,
+    WinIUserSid                                  = 63,
+    WinBuiltinCryptoOperatorsSid                 = 64,
+    WinUntrustedLabelSid                         = 65,
+    WinLowLabelSid                               = 66,
+    WinMediumLabelSid                            = 67,
+    WinHighLabelSid                              = 68,
+    WinSystemLabelSid                            = 69,
+    WinWriteRestrictedCodeSid                    = 70,
+    WinCreatorOwnerRightsSid                     = 71,
+    WinCacheablePrincipalsGroupSid               = 72,
+    WinNonCacheablePrincipalsGroupSid            = 73,
+    WinEnterpriseReadonlyControllersSid          = 74,
+    WinAccountReadonlyControllersSid             = 75,
+    WinBuiltinEventLogReadersGroup               = 76,
+    WinNewEnterpriseReadonlyControllersSid       = 77,
+    WinBuiltinCertSvcDComAccessGroup             = 78,
+    WinMediumPlusLabelSid                        = 79,
+    WinLocalLogonSid                             = 80,
+    WinConsoleLogonSid                           = 81,
+    WinThisOrganizationCertificateSid            = 82,
+    WinApplicationPackageAuthoritySid            = 83,
+    WinBuiltinAnyPackageSid                      = 84,
+    WinCapabilityInternetClientSid               = 85,
+    WinCapabilityInternetClientServerSid         = 86,
+    WinCapabilityPrivateNetworkClientServerSid   = 87,
+    WinCapabilityPicturesLibrarySid              = 88,
+    WinCapabilityVideosLibrarySid                = 89,
+    WinCapabilityMusicLibrarySid                 = 90,
+    WinCapabilityDocumentsLibrarySid             = 91,
+    WinCapabilitySharedUserCertificatesSid       = 92,
+    WinCapabilityEnterpriseAuthenticationSid     = 93,
+    WinCapabilityRemovableStorageSid             = 94,
+}}
+STRUCT!{struct TRUSTEE_A {
+    pMultipleTrustee: PTRUSTEE_A,
+    MultipleTrusteeOperation: MULTIPLE_TRUSTEE_OPERATION,
+    TrusteeForm: TRUSTEE_FORM,
+    TrusteeType: TRUSTEE_TYPE,
+    ptstrName: LPSTR,
+}}
+type PTRUSTEE_A = *mut TRUSTEE_A;
+STRUCT!{struct TRUSTEE_W {
+    pMultipleTrustee: PTRUSTEE_W,
+    MultipleTrusteeOperation: MULTIPLE_TRUSTEE_OPERATION,
+    TrusteeForm: TRUSTEE_FORM,
+    TrusteeType: TRUSTEE_TYPE,
+    ptstrName: LPWSTR,
+}}
+type PTRUSTEE_W = *mut TRUSTEE_W;
+STRUCT!{struct EXPLICIT_ACCESS_A {
+    grfAccessPermissions: DWORD,
+    grfAccessMode: ACCESS_MODE,
+    grfInheritance: DWORD,
+    Trustee: TRUSTEEA,
+}}
+type PEXPLICIT_ACCESS_A = *mut EXPLICIT_ACCESS_A;
+STRUCT!{struct EXPLICIT_ACCESS_W {
+    grfAccessPermissions: DWORD,
+    grfAccessMode: ACCESS_MODE,
+    grfInheritance: DWORD,
+    Trustee: TRUSTEEW,
+}}
+type PEXPLICIT_ACCESS_W = *mut EXPLICIT_ACCESS_W;
+ENUM!{enum ACCESS_MODE {
+  NOT_USED_ACCESS = 0,
+  GRANT_ACCESS,
+  SET_ACCESS,
+  DENY_ACCESS,
+  REVOKE_ACCESS,
+  SET_AUDIT_SUCCESS,
+  SET_AUDIT_FAILURE,
+}}
+ENUM!{enum MULTIPLE_TRUSTEE_OPERATION {
+  NO_MULTIPLE_TRUSTEE,
+  TRUSTEE_IS_IMPERSONATE,
+}}
+ENUM!{enum TRUSTEE_FORM {
+  TRUSTEE_IS_SID,
+  TRUSTEE_IS_NAME,
+  TRUSTEE_BAD_FORM,
+  TRUSTEE_IS_OBJECTS_AND_SID,
+  TRUSTEE_IS_OBJECTS_AND_NAME,
+}}
+ENUM!{enum TRUSTEE_TYPE {
+  TRUSTEE_IS_UNKNOWN,
+  TRUSTEE_IS_USER,
+  TRUSTEE_IS_GROUP,
+  TRUSTEE_IS_DOMAIN,
+  TRUSTEE_IS_ALIAS,
+  TRUSTEE_IS_WELL_KNOWN_GROUP,
+  TRUSTEE_IS_DELETED,
+  TRUSTEE_IS_INVALID,
+  TRUSTEE_IS_COMPUTER,
+}}
+type SECUIRTY_DESCRIPTOR_CONTROL = WORD;
+type PSECURITY_DESCRIPTOR_CONTROL = *mut PSECURITY_DESCRIPTOR_CONTROL;
+pub const SE_DACL_AUTO_INHERIT_REQ: SECUIRTY_DESCRIPTOR_CONTROL = 0x0100;
+pub const SE_DACL_AUTO_INHERITED: SECUIRTY_DESCRIPTOR_CONTROL = 0x0400;
+pub const SE_DACL_DEFAULTED: SECUIRTY_DESCRIPTOR_CONTROL = 0x0008;
+pub const SE_DACL_PRESENT: SECUIRTY_DESCRIPTOR_CONTROL = 0x0004;
+pub const SE_DACL_PROTECTED: SECUIRTY_DESCRIPTOR_CONTROL = 0x1000;
+pub const SE_GROUP_DEFAULTED: SECUIRTY_DESCRIPTOR_CONTROL = 0x0002;
+pub const SE_OWNER_DEFAULTED: SECUIRTY_DESCRIPTOR_CONTROL = 0x0001;
+pub const SE_RM_CONTROL_VALID: SECUIRTY_DESCRIPTOR_CONTROL = 0x4000;
+pub const SE_SACL_AUTO_INHERIT_REQ: SECUIRTY_DESCRIPTOR_CONTROL = 0x0200;
+pub const SE_SACL_AUTO_INHERITED: SECUIRTY_DESCRIPTOR_CONTROL = 0x0800;
+pub const SE_SACL_DEFAULTED: SECUIRTY_DESCRIPTOR_CONTROL = 0x0008;
+pub const SE_SACL_PRESENT: SECUIRTY_DESCRIPTOR_CONTROL = 0x0010;
+pub const SE_SACL_PROTECTED: SECUIRTY_DESCRIPTOR_CONTROL = 0x2000;
+pub const SE_SELF_RELATIVE: SECUIRTY_DESCRIPTOR_CONTROL = 0x8000;
+ENUM!{enum ACL_INFORMATION_CLASS {
+    AclRevisionInformation = 1,
+    AclSizeInformation,
+}}
